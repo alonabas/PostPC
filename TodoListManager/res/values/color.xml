@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <color name="white">#FFFFFF</color>
+ <color name="yellow">#FFFF00</color>
+ <drawable name="dark_blue_trans">#8836648B</drawable>
+ <color name="red">#FF0000</color>
+ <color name="silver">#C0C0C0</color>
+ <color name="gray">#808080</color>
+ <drawable name="gray_dark_trans">#887A8B8B</drawable>
+ <drawable name="white_trans">#FFFFFFFF</drawable>
+ <drawable name="white_trans_full">#00FFFFFF</drawable>
+ <color name="purple">#800080</color>
+ <color name="maroon">#800000</color>
+ <color name="aqua">#00FFFF</color>
+ <color name="lime">#00FF00</color>
+ <drawable name="green_dark_trans">#884A766E</drawable>
+ <color name="green">#008000</color>
+ <color name="blue">#0000FF</color>
+ <color name="navy">#000080</color>
+ <color name="black">#000000</color>
+</resources>

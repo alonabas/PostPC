@@ -8,25 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-     android:padding="15dip"
+    android:padding="15dip"
     tools:context=".TodoListManagerActivity" >
-    <EditText
-        android:id="@+id/edtNewItem"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:background="@drawable/border"
-        android:ems="30"
-        android:textSize="16sp"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
-        android:inputType="textMultiLine" >
-
-        <requestFocus />
-    </EditText>
-    <View
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        />
 
     <ListView
         android:id="@+id/lstTodoItems"

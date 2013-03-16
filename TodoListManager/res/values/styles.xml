@@ -16,4 +16,21 @@
     <style name="AppTheme" parent="android:style/Theme.Light">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    <style name="MyTheme" parent="AppTheme">
+       	<item name="android:windowTitleStyle">@style/WindowTitleBackground</item>
+	    <item name="android:windowTitleSize">35dp</item>
+    </style>
+    
+    
+    <style name="dialog_light" parent="@android:style/Theme.Dialog">
+    	<item name="@android:windowBackground">@color/white_gray</item>
+    	<item name="@android:textColor">@color/black</item>        
+	</style>
+	<style name="customTheme" parent="dialog_light">
+	    <item name="android:windowTitleStyle">@style/WindowTitleBackground</item>
+	    <item name="android:windowTitleSize">35dp</item>  
+    </style>
+    <style name="WindowTitleBackground"> 
+        <item name="android:background">@color/silver</item>
+    </style>
 </resources>

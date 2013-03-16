@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"	>
+    <item
+        android:id="@+id/menuItemDelete"
+        android:icon="@android:drawable/ic_delete"
+        android:title="@string/delete"> 
+    </item>
+    <item
+        android:id="@+id/menuItemCall"
+        android:icon="@android:drawable/sym_action_call"
+        android:title="@string/some_temp"> 
+    </item>
+
+</menu>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/my_button_shape_remove" android:state_pressed="true"/>
+    <item android:drawable="@drawable/my_button_shape_remove" android:state_focused="true"/>
+    <item>
+        <shape android:shape="rectangle" >
+			<gradient
+    			android:angle="90"
+    			android:endColor="#F5F5DC"
+    			android:startColor="#EE3B3B"
+				android:type="linear"
+			/>
+ 			<stroke android:width="2dp"
+        		android:color="#000000"
+        	/>
+ 			<padding android:left="10dp"
+                android:right="10dp"/>
+       		<corners android:radius="8dp"
+  				android:bottomRightRadius="8dp"
+  				android:bottomLeftRadius="8dp" 
+  				android:topLeftRadius="8dp"
+  				android:topRightRadius="8dp"
+  			/> 
+		</shape>
+   </item>
+</selector>

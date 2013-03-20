@@ -80,10 +80,9 @@ public class TodoListManagerActivity extends Activity {
 	    // if title of item doesn't contain "Call: ", then hide this option
 	    if(currentText.contains("Call ")){
 	    	callItem.setTitle(currentText);
-	    	callItem.setVisible(true);
 	    }
 	    else{
-	    	callItem.setVisible(false);
+	    	menu.removeItem(R.id.menuItemCall);
 		}
 	}
 	@Override

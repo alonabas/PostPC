@@ -3,7 +3,8 @@
     package="il.ac.huji.todolist"
     android:versionCode="1"
     android:versionName="1.0" >
-
+	<uses-permission android:name="android.permission.INTERNET" />
+	s<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
@@ -23,6 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name="il.ac.huji.todolist.AddNewTodoItemActivity"
+            android:theme="@style/dialog_light"/>
+         <activity android:name="il.ac.huji.todolist.EditItemActivity"
             android:theme="@style/dialog_light"/>
     </application>
 

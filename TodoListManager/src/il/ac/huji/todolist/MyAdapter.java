@@ -18,18 +18,18 @@ import android.widget.TextView;
  * @author alonaba
  *
  */
-public class MyAdapter extends ArrayAdapter<ToDoItem>{
+public class MyAdapter extends ArrayAdapter<ITodoItem>{
 	/**
 	 * Constructor
 	 * @param activity - the activity
 	 * @param todoItems - the items in ListView
 	 */
-	public MyAdapter(TodoListManagerActivity activity, List<ToDoItem> todoItems) {
+	public MyAdapter(TodoListManagerActivity activity, List<ITodoItem> todoItems) {
 		super(activity,android.R.layout.simple_list_item_1 ,todoItems);
 	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent){
-		ToDoItem item = getItem(position);
+		ToDoItem item = (ToDoItem) getItem(position);
 		LayoutInflater inflater = LayoutInflater.from(getContext());
 		View view = inflater.inflate(R.layout.one_item, null);
 		// The title
@@ -37,7 +37,7 @@ public class MyAdapter extends ArrayAdapter<ToDoItem>{
 		// The date
 		TextView itemDate = (TextView)view.findViewById(R.id.txtTodoDueDate);
 		// set Items
-		itemName.setText(item.getItem());
+		itemName.setText(item.getTitle());
 		itemName.setTextSize(25);
 		// get today's day to compare
 		Date curDate=new Date();
@@ -47,12 +47,12 @@ public class MyAdapter extends ArrayAdapter<ToDoItem>{
 			curDate=_sdf.parse(strDate);
 		} catch (ParseException e) {
 		}
-		if(item.getDate()==null){
+		if(item.getDueDate()==null){
 			itemDate.setText("No due date");
 		}
 		else{
 			itemDate.setText(item.getDateString());
-			if(item.getDate().before(curDate)){
+			if(item.getDueDate().before(curDate)){
 				// set color of text to red if date of item before then today
 				itemName.setTextColor(Color.RED);
 				itemDate.setTextColor(Color.RED);

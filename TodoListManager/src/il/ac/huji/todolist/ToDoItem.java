@@ -9,7 +9,7 @@ import java.util.Locale;
  * @author alonaba
  *
  */
-public class ToDoItem {
+public class ToDoItem implements ITodoItem{
 	/*
 	 * Translate date to string
 	 */
@@ -31,10 +31,7 @@ public class ToDoItem {
 		_item=item;
 		_date=date;
 	}
-	/**
-	 * Get date in String format
-	 * @return the date
-	 */
+	
 	public String getDateString(){
 		try{
 			return _sdf.format(_date);
@@ -42,18 +39,16 @@ public class ToDoItem {
 			return null;
 		}
 	}
-	/**
-	 * Get title of ToDoItem
-	 * @return title
-	 */
-	public String getItem(){
+	@Override
+	public String getTitle() {
 		return _item;
 	}
-	/**
-	 * Get date of ToDoItem
-	 * @return the date of item
-	 */
-	public Date getDate(){
+	@Override
+	public Date getDueDate() {
 		return _date;
+	}
+	
+	public void setDueDate(Date date) {
+		_date=date;
 	}
 }

@@ -6,7 +6,10 @@
     <string name="hello_world">Hello world!</string>
 	<string name="add">Add</string>
 	<string name="delete">Delete Item</string>
+	<string name="edit">Edit Item</string>
 	<string name="some_temp">""</string>
 	<string name="cancel">Cancel</string>
 	<string name="ok">OK</string>
+	<string name="parseApplication">5eWDeWtGzMMZpwgu0E5qEpqp5DDN6WLEa3XDcPzX</string>
+	<string name="clientKey">ws9TQmPVSbZ6ETsuQZMn8oDkEF2dMvKFW6j33Ju5</string>
 </resources>

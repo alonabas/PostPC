@@ -6,6 +6,11 @@
         android:title="@string/delete"> 
     </item>
     <item
+        android:id="@+id/menuItemEdit"
+        android:icon="@android:drawable/ic_delete"
+        android:title="@string/edit"> 
+    </item>
+    <item
         android:id="@+id/menuItemCall"
         android:icon="@android:drawable/sym_action_call"
         android:title="@string/some_temp"> 

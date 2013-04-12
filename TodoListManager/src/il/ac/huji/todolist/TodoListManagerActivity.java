@@ -1,10 +1,7 @@
 package il.ac.huji.todolist;
 
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -29,18 +26,14 @@ import android.widget.TextView;
  */
 public class TodoListManagerActivity extends Activity {
 	/*
-	 * List of items in list of todo notes
-	 */
-	private List<ToDoItem> _items=new ArrayList<ToDoItem>();
-	/*
-	 * Adapter to display list of items
-	 */
-	private MyAdapter _adapter;
-	/*
 	 * Application title
 	 */
 	private final String _title="ToDo List Manager";
+	
+	
 	ListView listOfItems;
+	TodoDAL _myUpdate;
+	private MyAdapter _adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,10 +50,10 @@ public class TodoListManagerActivity extends Activity {
         general.setBackgroundResource(R.drawable.bg5);
         //set opacity of background
         general.getBackground().setAlpha(60);
-        // the ListView
+        // 
+        _myUpdate=new TodoDAL(this);
+        _adapter=new MyAdapter(this,_myUpdate.all());
 		listOfItems=(ListView)findViewById(R.id.lstTodoItems);
-		// attach adapter to ListView
-		_adapter=new MyAdapter(this,_items);
 		listOfItems.setAdapter(_adapter);
 		registerForContextMenu(listOfItems);
 	}
@@ -88,20 +81,25 @@ public class TodoListManagerActivity extends Activity {
 	@Override
 	public boolean onContextItemSelected (MenuItem item){
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo)item.getMenuInfo();
-		int selectedItemIndex = info.position;		
+		int selectedItemIndex= info.position;
 		switch (item.getItemId()){
 			case R.id.menuItemDelete:
 				// delete item
-				_adapter.remove(_adapter.getItem(selectedItemIndex));			
+				//Cursor cursor = (Cursor) info.;
+				_myUpdate.delete(_adapter.getItem(selectedItemIndex));
+				_adapter.remove(_adapter.getItem(selectedItemIndex));
 				break;
 			case R.id.menuItemCall:
-				ToDoItem currentItem=_adapter.getItem(selectedItemIndex);
-				//define string to forward to ACTION_DIAL
-				String textItem=currentItem.getItem().replace("Call: ", "");
+				String textItem=_adapter.getItem(info.position).getTitle().replace("Call: ", "");
 				textItem=textItem.trim();
 				textItem="tel:"+textItem;
 				makeCall(textItem);
 				break;
+			case R.id.menuItemEdit:
+				Intent intent = new Intent(this, EditItemActivity.class);
+				intent.putExtra("item",_adapter.getItem(info.position).getTitle());
+				intent.putExtra("position",info.position);
+				startActivityForResult(intent,1);
 		}	
 		return true;
 	}
@@ -138,6 +136,19 @@ public class TodoListManagerActivity extends Activity {
 			}
 			// add item
 			_adapter.add(new ToDoItem(title,date));
+			_myUpdate.insert(new ToDoItem(title,date));
+		}
+		else if (reqCode == 1 && resCode == RESULT_OK){
+			Date date=null;
+			if(data.getExtras().get("newDueDate")!=null){
+				date = (Date) data.getExtras().get("newDueDate");
+			}
+			String title=data.getStringExtra("title");
+			int position=data.getIntExtra("position",-1);
+			// add item
+			_adapter.remove(_adapter.getItem(position));
+			_adapter.add(new ToDoItem(title,date));
+			_myUpdate.update(new ToDoItem(title,date));
 		}
 	}
 	/**

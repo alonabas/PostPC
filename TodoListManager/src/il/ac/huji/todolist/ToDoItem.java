@@ -23,7 +23,7 @@ public class ToDoItem implements ITodoItem{
 	 */
 	private Date _date;
 	/**
-	 * Constuctor
+	 * Constuctor for todo item
 	 * @param item - the item title
 	 * @param date - the daye of item
 	 */
@@ -31,7 +31,10 @@ public class ToDoItem implements ITodoItem{
 		_item=item;
 		_date=date;
 	}
-	
+	/**
+	 * Get due date as string
+	 * @return the String of due date
+	 */
 	public String getDateString(){
 		try{
 			return _sdf.format(_date);
@@ -47,7 +50,10 @@ public class ToDoItem implements ITodoItem{
 	public Date getDueDate() {
 		return _date;
 	}
-	
+	/**
+	 * Set new due date 
+	 * @param date - the date to set
+	 */
 	public void setDueDate(Date date) {
 		_date=date;
 	}

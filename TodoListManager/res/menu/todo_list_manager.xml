@@ -4,5 +4,15 @@
         android:icon="@drawable/add_todo"
         android:title="@string/add" android:checkable="false" android:enabled="true">
     </item>
+    <item
+        android:id="@+id/changeHashtag"
+        android:icon="@drawable/online_writing_icon"
+        android:title="@string/editHashtag" android:checkable="false" android:enabled="true">
+    </item>
+    <item
+        android:id="@+id/connectTwitter"
+        android:icon="@drawable/network_2_icon"
+        android:title="@string/editHashtag" android:checkable="false" android:enabled="true">
+    </item>
     
 </menu>

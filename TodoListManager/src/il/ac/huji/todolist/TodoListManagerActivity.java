@@ -1,12 +1,16 @@
 package il.ac.huji.todolist;
 
 
+import java.net.MalformedURLException;
 import java.util.Date;
-import android.net.Uri;
-import android.os.Bundle;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -19,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 /**
  * The main class that manages the activity
  * @author alonaba
@@ -34,6 +39,7 @@ public class TodoListManagerActivity extends Activity {
 	ListView listOfItems;
 	TodoDAL _myUpdate;
 	private MyAdapter _adapter;
+	TweetIntegration _tweetIntegration;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,7 +62,20 @@ public class TodoListManagerActivity extends Activity {
 		listOfItems=(ListView)findViewById(R.id.lstTodoItems);
 		listOfItems.setAdapter(_adapter);
 		registerForContextMenu(listOfItems);
-	}
+		// define hash tag, from preferences, if nothing defined in preferences
+		// the default is todoapp
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this); 
+		String mapTypeString = preferences.getString("hashtag", "todoapp");
+		try {	 
+			_tweetIntegration = new TweetIntegration(mapTypeString,TodoListManagerActivity.this,_myUpdate,_adapter);
+			_tweetIntegration.execute();
+		} catch (Exception e) {
+		}
+		// check for nulls
+		/*ToDoItem my=new ToDoItem("test",null);
+		_myUpdate.insert(my);
+		_adapter.add(my);*/
+    }
 	@Override	
 	public void onCreateContextMenu(ContextMenu menu, View view ,ContextMenuInfo menuInfo) {
 		getMenuInflater().inflate(R.menu.context_menu, menu);
@@ -114,11 +133,28 @@ public class TodoListManagerActivity extends Activity {
 	 */
 	public boolean onOptionsItemSelected(MenuItem item){
 		// switch on items selected
+		Intent intent;
 		switch(item.getItemId()){
 		case R.id.menuItemAdd:
 			// if add pressed open new activity and wait for result
-			Intent intent = new Intent(this, AddNewTodoItemActivity.class);
+			intent = new Intent(this, AddNewTodoItemActivity.class);
 			startActivityForResult(intent,0);
+			break;
+		case R.id.changeHashtag:
+			intent = new Intent(this, EditHashtagActivity.class);
+			startActivityForResult(intent,10);
+			break;
+		case R.id.connectTwitter:
+			// check new items in twitter
+			try{
+				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this); 
+				String mapTypeString = preferences.getString("hashtag", "todoapp");
+				_tweetIntegration = new TweetIntegration(mapTypeString,TodoListManagerActivity.this,_myUpdate,_adapter);
+				_tweetIntegration.execute();
+			}catch(Exception e){
+				Toast toast = Toast.makeText(this,e.getMessage(), Toast.LENGTH_LONG);
+				toast.show();
+			}
 		}
 		return true;
 	}
@@ -149,6 +185,25 @@ public class TodoListManagerActivity extends Activity {
 			_adapter.remove(_adapter.getItem(position));
 			_adapter.add(new ToDoItem(title,date));
 			_myUpdate.update(new ToDoItem(title,date));
+		}
+		else if(reqCode==10){
+			try {
+				// get hash code that defined in preferences
+				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this); 
+				String mapTypeString = preferences.getString("hashtag", "todoapp");
+				// if hash code has been changed, so calculate again the twitter
+				if(!mapTypeString.equals(_tweetIntegration.getHashtag())){
+					_tweetIntegration.setHashtag(mapTypeString);
+					try{
+						_tweetIntegration = new TweetIntegration(mapTypeString,TodoListManagerActivity.this,_myUpdate,_adapter);
+						_tweetIntegration.execute();
+					}catch(Exception e){
+						Toast toast = Toast.makeText(this,e.getMessage(), Toast.LENGTH_LONG);
+						toast.show();
+					}
+				}
+			} catch (MalformedURLException e) {
+			}
 		}
 	}
 	/**
